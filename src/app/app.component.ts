@@ -1,25 +1,16 @@
 import { Component } from '@angular/core';
-import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { Dictionary } from './models/dictionary.interface';
+import { DynamicFormGroupComponent } from './components/dynamic-form-group/dynamic-form-group.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [DynamicFormComponent],
+  imports: [DynamicFormGroupComponent],
   template: `
-    <div class="p-8">
-      <h2 class="mb-4 text-xl font-bold">Persona Form</h2>
-      <app-dynamic-form
-        [initialData]="persona"
-        (formValues)="onFormValues($event)"
-      />
-
-      <h2 class="mt-8 mb-4 text-xl font-bold">Contratto Form</h2>
-      <app-dynamic-form
-        [initialData]="contratto"
-        (formValues)="onFormValues($event)"
-      />
-    </div>
+    <app-dynamic-form-group
+      [initialData]="contract"
+      (formValues)="onFormValues($event)"
+    />
   `,
 })
 export class AppComponent {
@@ -29,30 +20,41 @@ export class AppComponent {
     console.table(values);
   }
 
-  persona: Dictionary = {
-    firstName: 'John',
-    lastName: 'Doe',
-    dateOfBirth: '1985-05-15',
-    address: '123 Main Street, Anytown, USA',
-    phoneNumber: '123-456-7890',
-    email: 'john.doe@example.com',
-    gender: 'Male',
-    nationality: 'American',
-    maritalStatus: 'Single',
-    occupation: 'Software Engineer',
-  };
-
-  contratto: Dictionary = {
+  contract: Dictionary = {
     contractId: 'C12345',
     contractType: 'Employment',
     startDate: '2024-01-01',
     endDate: '2025-01-01',
-    employerName: 'Tech Corp Inc.',
-    employeeName: 'John Doe',
-    salary: '50000',
-    benefits: 'Health, Dental, Vision',
-    jobTitle: 'Senior Developer',
-    jobDescription:
-      'Responsible for developing and maintaining web applications.',
+    employer: {
+      name: 'Tech Corp Inc.',
+      address: '456 Technology Drive, Silicon Valley, USA',
+      contact: {
+        phone: '555-1234',
+        email: 'hr@techcorp.com',
+      },
+    },
+    employee: {
+      firstName: 'John',
+      lastName: 'Doe',
+      dateOfBirth: '1985-05-15',
+      address: '123 Main Street, Anytown, USA',
+      phoneNumber: '123-456-7890',
+      emergencyContact: {
+        name: 'Jane Doe',
+        relationship: 'Spouse',
+        phoneNumber: '123-456-7891',
+      },
+    },
+    jobDetails: {
+      jobTitle: 'Senior Developer',
+      jobDescription:
+        'Responsible for developing and maintaining web applications.',
+      salary: '75000',
+      benefits: 'Health, Dental, Vision',
+    },
+    additionalInfo: {
+      notes: 'Employee must complete a 90-day probation period.',
+      department: 'Software Development',
+    },
   };
 }
